@@ -324,8 +324,8 @@
                     </div>
                     <div>
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-lg font-bold">Martial Artist (Judo)</h3>
-                            <span class="text-sm font-mono text-gray-500">2 Years</span>
+                            <h3 class="text-lg font-bold">Martial Arts - Judo, Freestyle</h3>
+                            <span class="text-sm font-mono text-amber-600 font-bold tracking-widest uppercase">National Gold</span>
                         </div>
                         <p class="text-gray-800 text-sm leading-relaxed">Underwent rigorous physical and mental conditioning. Developed unparalleled discipline, resilience, and strategic combat thinking.</p>
                     </div>
@@ -474,13 +474,13 @@
         </footer>
     </div>
 
-    <div id="ee-container" class="fixed inset-0 z-[100] bg-zinc-950/95 hidden flex-col items-center justify-center text-white font-mono p-6 backdrop-blur-md">
+    <div id="ee-container" class="fixed inset-0 z-[100] bg-zinc-950/95 hidden flex-col items-center justify-center text-white font-mono p-4 md:p-6 backdrop-blur-md overflow-y-auto">
         <!-- Persistent Back Button -->
         <button onclick="exitEasterEgg(event)" class="absolute top-6 left-6 flex items-center gap-2 text-red-500 hover:text-red-400 transition-colors z-[120] group font-bold tracking-widest text-sm bg-zinc-900/80 px-4 py-2 rounded border border-red-900/50 cursor-none">
             <i class="ph ph-arrow-left text-xl group-hover:-translate-x-1 transition-transform"></i> BACK TO CV
         </button>
 
-        <div id="ee-s1" class="text-center space-y-8 max-w-2xl animate-fadeIn">
+        <div id="ee-s1" class="text-center space-y-8 max-w-2xl animate-fadeIn my-auto">
             <h2 class="text-5xl md:text-7xl font-serif text-red-600 font-black tracking-tighter">TRIGGER HAPPY?</h2>
             <p class="text-zinc-400 text-lg">You wanna shoot? Click play.</p>
             <button onclick="startEEGame(event)" class="px-10 py-4 bg-red-600 text-white font-bold tracking-widest hover:bg-red-500 transition-colors rounded shadow-[0_0_20px_rgba(239,68,68,0.5)] cursor-none text-lg">PLAY MINIGAME</button>
@@ -493,33 +493,33 @@
             <div id="ee-game-area" class="absolute inset-0 top-24 pointer-events-none"></div>
         </div>
 
-        <div id="ee-s3" class="hidden text-center space-y-6 max-w-3xl w-full animate-fadeIn mt-12 relative z-[110]">
-            <h2 class="text-3xl font-serif text-red-600 font-black">TIME'S UP. SCORE: <span id="ee-final-score" class="text-white">0</span></h2>
-            <p class="text-zinc-300 text-lg border-b border-zinc-800 pb-6">Impressive target acquisition. But how about going to a law class?</p>
+        <div id="ee-s3" class="hidden text-center space-y-3 md:space-y-5 max-w-3xl w-full animate-fadeIn mt-12 md:mt-16 relative z-[110] my-auto pb-12">
+            <h2 class="text-2xl md:text-3xl font-serif text-red-600 font-black">TIME'S UP. SCORE: <span id="ee-final-score" class="text-white">0</span></h2>
+            <p class="text-zinc-300 text-base md:text-lg border-b border-zinc-800 pb-3 md:pb-5">Impressive target acquisition. But how about going to a law class?</p>
             
-            <div class="bg-zinc-900 border border-zinc-700 p-6 rounded-md text-left text-zinc-400 space-y-4 shadow-2xl relative overflow-hidden">
+            <div class="bg-zinc-900 border border-zinc-700 p-4 md:p-6 rounded-md text-left text-zinc-400 space-y-2 md:space-y-4 shadow-2xl relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-red-600"></div>
-                <p class="text-white font-bold font-serif text-xl border-b border-zinc-700 pb-2 flex items-center gap-2">
+                <p class="text-white font-bold font-serif text-lg md:text-xl border-b border-zinc-700 pb-2 flex items-center gap-2">
                     <i class="ph ph-scales text-red-500"></i> ETHICAL DILEMMA
                 </p>
                 <p class="text-sm md:text-base leading-relaxed text-zinc-300">Your client confesses to a gruesome murder. An innocent person is currently on death row for this exact crime, scheduled for execution tomorrow. Your client strictly invokes Attorney-Client Privilege and absolutely forbids you from speaking.</p>
-                <p class="text-red-400 font-bold text-sm tracking-widest uppercase mt-4">What is your move, Counselor?</p>
+                <p class="text-red-400 font-bold text-xs md:text-sm tracking-widest uppercase mt-2 md:mt-4">What is your move, Counselor?</p>
             </div>
             
-            <div class="grid grid-cols-1 gap-3 mt-4">
-                <button onclick="showEEResult(1, event)" class="p-4 border border-zinc-700 hover:border-red-500 hover:bg-zinc-800/50 transition-colors text-left text-sm cursor-none text-zinc-300 hover:text-white rounded flex items-center gap-3 group">
-                    <span class="text-red-500 font-bold opacity-50 group-hover:opacity-100 text-lg">A</span> Break privilege to save the innocent person.
+            <div class="grid grid-cols-1 gap-2 md:gap-3 mt-2 md:mt-4">
+                <button onclick="showEEResult(1, event)" class="p-3 md:p-4 border border-zinc-700 hover:border-red-500 hover:bg-zinc-800/50 transition-colors text-left text-xs md:text-sm cursor-none text-zinc-300 hover:text-white rounded flex items-center gap-3 group">
+                    <span class="text-red-500 font-bold opacity-50 group-hover:opacity-100 text-base md:text-lg">A</span> Break privilege to save the innocent person.
                 </button>
-                <button onclick="showEEResult(2, event)" class="p-4 border border-zinc-700 hover:border-red-500 hover:bg-zinc-800/50 transition-colors text-left text-sm cursor-none text-zinc-300 hover:text-white rounded flex items-center gap-3 group">
-                    <span class="text-red-500 font-bold opacity-50 group-hover:opacity-100 text-lg">B</span> Remain silent. Uphold the sacred oath of privilege.
+                <button onclick="showEEResult(2, event)" class="p-3 md:p-4 border border-zinc-700 hover:border-red-500 hover:bg-zinc-800/50 transition-colors text-left text-xs md:text-sm cursor-none text-zinc-300 hover:text-white rounded flex items-center gap-3 group">
+                    <span class="text-red-500 font-bold opacity-50 group-hover:opacity-100 text-base md:text-lg">B</span> Remain silent. Uphold the sacred oath of privilege.
                 </button>
-                <button onclick="showEEResult(3, event)" class="p-4 border border-zinc-700 hover:border-red-500 hover:bg-zinc-800/50 transition-colors text-left text-sm cursor-none text-zinc-300 hover:text-white rounded flex items-center gap-3 group">
-                    <span class="text-red-500 font-bold opacity-50 group-hover:opacity-100 text-lg">C</span> Leak the information anonymously to the press.
+                <button onclick="showEEResult(3, event)" class="p-3 md:p-4 border border-zinc-700 hover:border-red-500 hover:bg-zinc-800/50 transition-colors text-left text-xs md:text-sm cursor-none text-zinc-300 hover:text-white rounded flex items-center gap-3 group">
+                    <span class="text-red-500 font-bold opacity-50 group-hover:opacity-100 text-base md:text-lg">C</span> Leak the information anonymously to the press.
                 </button>
             </div>
         </div>
 
-        <div id="ee-s4" class="hidden text-center space-y-8 max-w-2xl w-full animate-fadeIn relative z-[110]">
+        <div id="ee-s4" class="hidden text-center space-y-8 max-w-2xl w-full animate-fadeIn relative z-[110] my-auto">
             <h2 class="text-4xl font-serif text-red-600 font-black">THE VERDICT</h2>
             <div id="ee-result-text" class="text-lg text-zinc-300 bg-zinc-900 border border-zinc-700 p-8 rounded-md leading-relaxed shadow-2xl text-left"></div>
             <button onclick="exitEasterEgg(event)" class="px-8 py-3 border border-red-600 text-red-500 font-bold tracking-widest hover:bg-red-600 hover:text-white transition-colors rounded cursor-none inline-flex items-center gap-2 mt-4">
@@ -590,7 +590,7 @@
                 id: 'marksman', title: "Exhibit B: Caliber & Focus", icon: "ph-target",
                 items: [
                     { role: "Professional Athlete", entity: "10m Air Pistol Shooting", date: "Present", desc: "Cultivating elite-level concentration, mental fortitude, and precision. The ability to block out external noise directly translates to hyper-focus during intensive research." },
-                    { role: "Martial Artist", entity: "Judo", date: "2 Years", desc: "Underwent rigorous physical and mental conditioning. Developed unparalleled discipline, resilience, and strategic combat thinking." }
+                    { role: "Martial Arts - Judo, Freestyle", entity: "National Gold Medalist", date: "Recent", desc: "Underwent rigorous physical and mental conditioning. Developed unparalleled discipline, resilience, and strategic combat thinking." }
                 ]
             },
             strategy: {
