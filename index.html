@@ -333,7 +333,7 @@
                     <h1 class="text-5xl md:text-6xl font-serif font-black leading-none tracking-tighter mb-4 text-zinc-900 title-text transition-colors">
                         PRECISION <br/>
                         <span class="flex items-center gap-4 mt-2">
-                            <span class="text-zinc-300 focus-amp transition-colors">&</span> POWER.
+                            <span class="text-zinc-300 focus-amp transition-colors">&amp;</span> POWER.
                         </span>
                     </h1>
 
@@ -455,11 +455,11 @@
     <script>
         // --- AUDIO SYSTEM SETUP ---
         
-        // 2. Heavy Stamp THUD Sound
+        // Heavy Stamp THUD Sound
         const stampThudAudio = new Audio('brawl-stars-win-winning-sounds-sound-effect-brawl-stars-hd-sound-effects.mp3');
         stampThudAudio.volume = 0.8; 
 
-        // 3. Focus Bass Hum Sound
+        // Focus Bass Hum Sound
         const focusHumAudio = new Audio('bout-to-level-up.mp3');
         focusHumAudio.loop = true;
         focusHumAudio.volume = 0.5;
@@ -467,6 +467,11 @@
         // Custom Gunshot (Existing)
         const customSound = new Audio('m4a1_single-kibblesbob-8540445.mp3');
         customSound.volume = 0.4;
+
+        // Binary Coding Interface SFX
+        const codingSfx = new Audio('Binary Code - Interface Sound Effects  Sci-Fi Computer Beeps & Data Processing Sounds.mp3');
+        codingSfx.loop = true;
+        codingSfx.volume = 0.4;
         
         // --- END AUDIO SETUP ---
 
@@ -561,7 +566,11 @@
                 const cursor = document.getElementById('boot-cursor');
                 if (cursor) cursor.style.display = 'none';
                 
-                // --- NEW CINEMATIC ANIMATION LOGIC ---
+                // STOP coding audio effect right before the title card visual triggers
+                codingSfx.pause();
+                codingSfx.currentTime = 0;
+                
+                // --- CINEMATIC ANIMATION LOGIC ---
                 setTimeout(() => {
                     const bootContent = document.getElementById('boot-content');
                     if(bootContent) bootContent.style.opacity = '0'; // Fade out terminal text
@@ -611,7 +620,7 @@
             }
         }
 
-        // --- NEW PROTOCOL FUNCTIONS ---
+        // --- PROTOCOL FUNCTIONS ---
         function chooseMaximalism() {
             viewMode = 'max';
             const choiceScreen = document.getElementById('choice-screen');
@@ -735,10 +744,8 @@
             const bars = skillDiv.querySelectorAll('.skill-bar');
             bars.forEach(bar => {
                 if(bar.getAttribute('data-active') === 'true') {
-                    bar.classList.replace('bg-zinc-200', 'bg-red-50');
-                    bar.classList.replace('bg-zinc-250', 'bg-red-500');
-                    bar.classList.replace('bg-zinc-700', 'bg-red-500');
                     bar.classList.replace('bg-zinc-200', 'bg-red-500');
+                    bar.classList.replace('bg-zinc-700', 'bg-red-500');
                     bar.classList.replace('border-zinc-300', 'border-red-400');
                     bar.classList.replace('border-zinc-600', 'border-red-400');
                     bar.style.boxShadow = '0 0 8px rgba(239,68,68,0.6)';
@@ -1076,7 +1083,7 @@
             const secureBtn = document.querySelector('.secure-btn');
             if(secureBtn) {
                 secureBtn.classList.replace('bg-red-900/20', 'bg-red-50');
-                secureBtn.classList.replace('border-red-500/30', 'border-red-200');
+                secureBtn.classList.replace('border-red-200', 'border-red-500/30');
             }
             
             const secureBtnAlt = document.querySelector('.secure-btn-alt');
@@ -1315,6 +1322,27 @@
             if (window.appInitialized) return;
             window.appInitialized = true;
             
+            // Explicit autoplay property
+            codingSfx.autoplay = true;
+
+            // Attempt instantaneous play (if permitted by cached user profile/gesture history)
+            codingSfx.play().catch(e => {
+                console.log("Autoplay strictly intercepted by host browser. Instantiating interactive triggers.");
+            });
+
+            // Set up aggressive listeners across all possible early page interactions
+            const interactionTriggers = ['mousedown', 'touchstart', 'mousemove', 'keydown', 'click'];
+            const forcePlaySfx = () => {
+                codingSfx.play().then(() => {
+                    // Once playing smoothly, decouple listeners
+                    interactionTriggers.forEach(trigger => document.removeEventListener(trigger, forcePlaySfx));
+                }).catch(err => {
+                    console.log("Audio pipeline queued behind active client gesture:", err);
+                });
+            };
+
+            interactionTriggers.forEach(trigger => document.addEventListener(trigger, forcePlaySfx));
+
             bootInterval = setInterval(renderBootText, 350);
             initSkills();
             renderTabs();
