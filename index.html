@@ -277,7 +277,7 @@
             </section>
 
             <div class="mt-16 pt-8 border-t border-gray-200 text-center">
-                <button onclick="location.reload()" class="text-xs text-gray-400 hover:text-black uppercase tracking-widest font-mono transition-colors">
+                <button onclick="showProtocolScreen()" class="text-xs text-gray-400 hover:text-black uppercase tracking-widest font-mono transition-colors">
                     [ Restart System / Switch Protocol ]
                 </button>
             </div>
@@ -328,7 +328,7 @@
             </div>
         </nav>
 
-        <main class="relative z-10 max-w-7xl mx-auto p-6 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
+        <main id="standard-main" class="relative z-10 max-w-7xl mx-auto p-6 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 transition-opacity duration-300">
             
             <div class="lg:col-span-5 space-y-8 relative">
                 <div class="bg-white border-2 border-zinc-200 p-8 relative overflow-hidden shadow-xl legal-border dossier-card transition-colors duration-500 rounded-sm">
@@ -340,7 +340,7 @@
                         <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-200 text-red-700 font-bold text-[10px] font-mono rounded-sm uppercase tracking-widest badge-bg transition-colors">
                             <i class="ph ph-shield-check"></i> ACWL-2029
                         </div>
-                        <span class="text-[10px] font-mono text-zinc-400 font-bold tracking-widest border-b border-zinc-200 file-no transition-colors">FILE NO: 02-23-2006</span>
+                        <span class="text-[10px] font-mono text-zinc-400 font-bold tracking-widest border-b border-zinc-200 file-no transition-colors">FILE NO: 02-03-2006</span>
                     </div>
                     
                     <h1 class="text-5xl md:text-6xl font-serif font-black leading-none tracking-tighter mb-4 text-zinc-900 title-text transition-colors">
@@ -397,7 +397,7 @@
                         <i class="ph ph-envelope-simple text-sm"></i>
                         <span class="hidden sm:inline">Secure Mail</span>
                     </a>
-                    <a href="https://linkedin.com/in/cheshtasaluja" target="_blank" class="magnetic flex items-center gap-1.5 px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-600 hover:text-white rounded shadow-sm text-[10px] font-bold tracking-widest uppercase transition-all secure-btn-alt">
+                    <a href="https://www.linkedin.com/in/cheshtaxsaluja/" target="_blank" class="magnetic flex items-center gap-1.5 px-3 py-1 bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-600 hover:text-white rounded shadow-sm text-[10px] font-bold tracking-widest uppercase transition-all secure-btn-alt">
                         <i class="ph ph-linkedin-logo text-sm"></i>
                         <span class="hidden sm:inline">Network Link</span>
                     </a>
@@ -643,10 +643,12 @@
 
             if(choiceScreen) {
                 choiceScreen.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => choiceScreen.remove(), 1000);
+                setTimeout(() => choiceScreen.classList.add('hidden'), 1000);
             }
 
             if(mainApp) {
+                mainApp.classList.remove('hidden');
+                void mainApp.offsetWidth;
                 mainApp.classList.remove('opacity-0', 'pointer-events-none');
                 isBooting = false;
                 
@@ -696,7 +698,7 @@
 
             if(choiceScreen) {
                 choiceScreen.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => choiceScreen.remove(), 1000);
+                setTimeout(() => choiceScreen.classList.add('hidden'), 1000);
             }
 
             // Hide the tactical dossier if we are exporting from it
@@ -713,6 +715,60 @@
             }
         }
         
+        window.showProtocolScreen = function() {
+            const minimalApp = document.getElementById('minimal-app');
+            const mainApp = document.getElementById('main-app');
+            const choiceScreen = document.getElementById('choice-screen');
+            const parallaxBg = document.getElementById('parallax-bg');
+
+            if(minimalApp) {
+                minimalApp.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => minimalApp.classList.add('hidden'), 500);
+            }
+            
+            if(mainApp) {
+                mainApp.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => mainApp.classList.add('hidden'), 500);
+            }
+
+            if(parallaxBg) parallaxBg.innerHTML = ''; // Clear parallax elements to prevent doubling
+            
+            // Reset cursors and UI states
+            document.getElementById('cursor-primary').style.display = 'block';
+            document.getElementById('cursor-laser').style.display = 'block';
+            document.getElementById('coord-display').style.display = 'block';
+            document.querySelector('.noise-overlay').style.display = 'block';
+            
+            // Un-check skills override if it was on
+            skillsDecrypted = false;
+            document.querySelectorAll('.skill-row').forEach(row => deactivateSkillRow(row));
+            const decryptBtn = document.getElementById('decrypt-btn');
+            if(decryptBtn) {
+                decryptBtn.innerText = 'DECRYPT ALL';
+                if (document.body.classList.contains('focus-active')) {
+                     decryptBtn.className = 'magnetic bg-red-600/10 border border-red-500/50 text-red-500 text-[10px] font-mono px-3 py-1 rounded shadow-sm hover:bg-red-600 hover:text-white hover:border-red-600 transition-all uppercase tracking-widest font-bold';
+                } else {
+                     decryptBtn.className = 'magnetic bg-red-50 border border-red-200 text-red-600 text-[10px] font-mono px-3 py-1 rounded shadow-sm hover:bg-red-600 hover:text-white hover:border-red-600 transition-all uppercase tracking-widest font-bold';
+                }
+            }
+            
+            // Remove declassified stamp animation class so it fires again
+            const stamp = document.getElementById('declassified-stamp');
+            if(stamp) stamp.classList.remove('animate-stamp');
+
+            viewMode = null;
+            document.body.style.cursor = 'auto';
+
+            setTimeout(() => {
+                if(choiceScreen) {
+                    choiceScreen.classList.remove('hidden');
+                    void choiceScreen.offsetWidth;
+                    choiceScreen.classList.remove('opacity-0');
+                    choiceScreen.classList.add('pointer-events-auto');
+                }
+            }, 500);
+        };
+
         window.exportAndPrint = function() {
             chooseMinimalism();
             // Wait for the minimal UI to fade in, then trigger print dialog
@@ -905,7 +961,7 @@
             activeTab = id;
             renderTabs();
         }
-
+        
         document.getElementById('focus-btn').addEventListener('click', (e) => {
             e.stopPropagation();
             focusMode = !focusMode;
@@ -1231,38 +1287,52 @@
         }
 
         document.addEventListener('mousemove', (e) => {
-            if(isBooting || viewMode === 'min') {
-                // Keep custom crosshair nodes hidden during the initial terminal phase so standard system pointer remains visible and click-friendly
-                const cursorPrimary = document.getElementById('cursor-primary');
-                const cursorLaser = document.getElementById('cursor-laser');
-                const coordDisplay = document.getElementById('coord-display');
-                if (cursorPrimary) cursorPrimary.style.display = 'none';
-                if (cursorLaser) cursorLaser.style.display = 'none';
-                if (coordDisplay) coordDisplay.style.display = 'none';
-                return;
+            if(isBooting || viewMode === 'min') return; // Stop custom cursor in minimal mode
+            
+            mouseX = e.clientX; mouseY = e.clientY;
+            let renderX = mouseX;
+            let renderY = mouseY;
+            
+            if (eeActive) {
+                // Strong aim assist for minigame target
+                const eye = document.querySelector('.ph-eye');
+                if (eye) {
+                    const rect = eye.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const dist = Math.hypot(centerX - mouseX, centerY - mouseY);
+                    if (dist < 150) { 
+                        const pullFactor = 1 - (dist / 150); // Stronger pull as you get closer
+                        renderX = mouseX + (centerX - mouseX) * pullFactor * 0.8;
+                        renderY = mouseY + (centerY - mouseY) * pullFactor * 0.8;
+                    }
+                }
+            } else {
+                // Subtle UI aim assist for interactive elements
+                const isClickableTarget = e.target.closest('button, a, .redacted, .skill-row, .tab-btn');
+                if (isClickableTarget) {
+                    const rect = isClickableTarget.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    renderX = mouseX + (centerX - mouseX) * 0.15;
+                    renderY = mouseY + (centerY - mouseY) * 0.15;
+                }
             }
             
-            // Unhide and position custom tactical pointers if in maximalist interactive mode
             const cursorPrimary = document.getElementById('cursor-primary');
-            const cursorLaser = document.getElementById('cursor-laser');
             const coordDisplay = document.getElementById('coord-display');
-            if (cursorPrimary) cursorPrimary.style.display = 'block';
-            if (cursorLaser) cursorLaser.style.display = 'block';
-            if (coordDisplay) coordDisplay.style.display = 'block';
-
-            mouseX = e.clientX; mouseY = e.clientY;
+            const parallaxBg = document.getElementById('parallax-bg');
             
             if(cursorPrimary) {
-                cursorPrimary.style.left = `${mouseX}px`;
-                cursorPrimary.style.top = `${mouseY}px`;
+                cursorPrimary.style.left = `${renderX}px`;
+                cursorPrimary.style.top = `${renderY}px`;
             }
             if(coordDisplay) {
-                coordDisplay.style.left = `${mouseX}px`;
-                coordDisplay.style.top = `${mouseY}px`;
-                coordDisplay.innerText = `X:${mouseX} Y:${mouseY}`;
+                coordDisplay.style.left = `${renderX}px`;
+                coordDisplay.style.top = `${renderY}px`;
+                coordDisplay.innerText = `X:${Math.round(renderX)} Y:${Math.round(renderY)}`;
             }
             
-            const parallaxBg = document.getElementById('parallax-bg');
             if(parallaxBg) {
                 const px = (mouseX - window.innerWidth/2) * -0.02;
                 const py = (mouseY - window.innerHeight/2) * -0.02;
@@ -1295,6 +1365,26 @@
         document.addEventListener('click', (e) => {
             if(isBooting || viewMode === 'min') return; // Do not shoot in minimal mode or while booting
             
+            if (eeActive) {
+                const eye = document.querySelector('.ph-eye');
+                // Check if they missed the element visually but were inside the assist radius
+                if (eye && !e.target.classList.contains('ph-eye')) {
+                    const rect = eye.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const dist = Math.hypot(centerX - e.clientX, centerY - e.clientY);
+                    
+                    // Forgiving hitbox radius (100px)
+                    if (dist < 100) {
+                        eeScore++;
+                        document.getElementById('ee-score').innerText = eeScore;
+                        eye.style.transform = 'scale(0) rotate(180deg)';
+                        eye.style.opacity = '0';
+                        setTimeout(() => eye.remove(), 150);
+                    }
+                }
+            }
+
             // Easter Egg Trigger Logic (Don't trigger if clicking buttons or links)
             if(!eeActive && !e.target.closest('button') && !e.target.closest('a')) {
                 shootCount++;
