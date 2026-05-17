@@ -639,11 +639,27 @@
             }
         }
 
+        function playMinimalistAppearanceSound() {
+            try {
+                // Instantiating the requested Windows 7 startup audio file
+                const minimalSound = new Audio('windows-7-startup.mp3');
+                minimalSound.volume = 0.5; // Optimized volume level
+                minimalSound.play().catch(e => {
+                    console.log("Audio play postponed until user clicks on screen:", e);
+                });
+            } catch (err) {
+                console.warn("Audio playback failed:", err);
+            }
+        }
+
         function chooseMinimalism() {
             viewMode = 'min';
             const choiceScreen = document.getElementById('choice-screen');
             const minimalApp = document.getElementById('minimal-app');
             const mainApp = document.getElementById('main-app');
+            
+            // Trigger the transition sound effect
+            playMinimalistAppearanceSound();
             
             // Disable custom cursors and noise
             document.body.style.cursor = 'auto';
@@ -681,7 +697,6 @@
                 window.print();
             }, 800);
         };
-        // ------------------------------
 
         function initSkills() {
             const skillsContainer = document.getElementById('skills-container');
@@ -720,8 +735,10 @@
             const bars = skillDiv.querySelectorAll('.skill-bar');
             bars.forEach(bar => {
                 if(bar.getAttribute('data-active') === 'true') {
-                    bar.classList.replace('bg-zinc-200', 'bg-red-500');
+                    bar.classList.replace('bg-zinc-200', 'bg-red-50');
+                    bar.classList.replace('bg-zinc-250', 'bg-red-500');
                     bar.classList.replace('bg-zinc-700', 'bg-red-500');
+                    bar.classList.replace('bg-zinc-200', 'bg-red-500');
                     bar.classList.replace('border-zinc-300', 'border-red-400');
                     bar.classList.replace('border-zinc-600', 'border-red-400');
                     bar.style.boxShadow = '0 0 8px rgba(239,68,68,0.6)';
